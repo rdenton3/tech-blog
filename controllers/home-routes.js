@@ -30,7 +30,10 @@ router.get('/', (req, res) => {
         //   serialize entire array
         const posts = dbPostData.map(post => post.get({ plain: true }));
         // pass a single post object into the homepage template
-        res.render('homepage', { posts });
+        res.render('homepage', {
+            posts,
+            loggedIn: req.session.loggedIn
+          });
       })
       .catch(err => {
         console.log(err);
@@ -46,12 +49,6 @@ if (req.session.loggedIn) {
 
 res.render('login');
 });
-
-router.get('/', (req, res) => {
-    console.log(req.session);
-  
-    // other logic...
-  });
 
   router.get('/post/:id', (req, res) => {
     Post.findOne({
@@ -97,5 +94,14 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
       });
   });
+
+//   router.get('/', (req, res) => {
+//     console.log(req.session);
+//     res.render('homepage', {
+//         posts,
+//         loggedIn: req.session.loggedIn
+//       });
+//   });
+
 
 module.exports = router;

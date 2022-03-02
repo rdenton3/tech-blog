@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
     })
 });
 
+// only allow user to post comment if they are logged in
 router.post('/', (req, res) => {
   // check the session
   if (req.session) {
