@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const withAuth = require('../../utils/auth');
 const { Comment } = require('../../models');
 
 router.get('/', (req, res) => {
@@ -8,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 // only allow user to post comment if they are logged in
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   // check the session
   if (req.session) {
     Comment.create({
